@@ -21,8 +21,6 @@
 </template>
 
 <script lang="ts">
-
-import { MenuItemClicked } from "element-plus";
 import { defineComponent } from "vue";
 
 export default defineComponent({
