@@ -9,11 +9,11 @@ jobs:
     - id: Build-Vue
       uses: xRealNeon/VuePagesAction@1.0.1
       with:
-        username: Archerist
-        reponame: archerist.github.io
+        username: 'Archerist'
+        reponame: 'archerist.github.io'
         token: ${{ secrets.GITHUB_TOKEN }}
-		cname: archerist.dev
-	permissions:
-		contents: write
-		repository-projects: write
-		packages: write
+        cname: archerist.dev
+    permissions:
+        contents: write
+        repository-projects: write
+        packages: write
