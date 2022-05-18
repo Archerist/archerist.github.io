@@ -11,7 +11,7 @@ jobs:
         with:
           node-version: '16'
       - run: |
-          npm i --only=prod
+          npm i
           npm run build
       - name: Push directory to another repository
         uses: cpina/github-action-push-to-another-repository@v1.4.2
