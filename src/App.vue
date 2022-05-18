@@ -14,9 +14,7 @@
 			</el-menu>
 		</el-header>
 		<el-main>
-			<el-container>
-				<router-view />
-			</el-container>
+			<router-view />
 		</el-main>
 	</el-container>
 	</div>
