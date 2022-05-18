@@ -1,5 +1,5 @@
 <template>
 	<div>
-		PROFILE
+		Hello World!
 	</div>
 </template>
