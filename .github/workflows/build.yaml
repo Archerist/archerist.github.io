@@ -20,7 +20,7 @@ jobs:
         with:
           source-directory: 'dist'
           destination-github-username: 'archerist'
-          destination-github-repository: 'archerist.github.io'
+          destination-repository-name: 'archerist.github.io'
           user-email: yunuscemberci@gmail.com
           target-branch: main
 
