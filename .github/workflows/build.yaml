@@ -12,3 +12,4 @@ jobs:
         username: 'Archerist'
         reponame: 'archerist.github.io'
         token: ${{ secrets.API_TOKEN_GITHUB }}
+        cname: archerist.dev
