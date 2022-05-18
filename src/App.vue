@@ -1,30 +1,26 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view />
+
+	<div class="common-layout">
+	<el-container>
+		<el-header>
+			<el-menu mode="horizontal" :ellipsis="true" id="nav">
+				<el-menu-item index="1">Profile</el-menu-item>
+				<el-sub-menu index="2">
+					<template #title>
+						Tools
+					</template>
+					<el-menu-item>JWT</el-menu-item>
+				</el-sub-menu>
+			</el-menu>
+		</el-header>
+		<el-main>
+			<div>
+				<router-view />
+			</div>
+		</el-main>
+	</el-container>
+	</div>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
