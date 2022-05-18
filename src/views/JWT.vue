@@ -4,6 +4,7 @@
 
     <el-row :gutter="10" justify="end">
         <el-col :span="12" >
+            <label>Token</label>
             <el-input type="textarea" :rows="15"/>
         </el-col>
         <el-col :span="12">
