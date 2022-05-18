@@ -1,19 +1,26 @@
-name: Build Vue
+name: Build and Publish
 on: [push]
 jobs:
-  build_vue:
+  Build and Publish:
     runs-on: ubuntu-latest
-    name: Build Vue
     steps:
-    - uses: actions/checkout@v2
-    - id: Build-Vue
-      uses: xRealNeon/VuePagesAction@1.0.1
-      with:
-        username: 'Archerist'
-        reponame: 'archerist.github.io'
-        token: ${{ secrets.GITHUB_TOKEN }}
-        cname: archerist.dev
-    permissions:
-        contents: write
-        repository-projects: write
-        packages: write
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: List files in the repository
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: |
+          npm i --only=prod
+          npm run build
+      - name: Push directory to another repository
+        uses: cpina/github-action-push-to-another-repository@v1.4.2
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: 'dist'
+          destination-github-username: 'archerist'
+          destination-github-username: 'archerist.github.io'
+          user-email: yunuscemberci@gmail.com
+          target-branch: main
+
