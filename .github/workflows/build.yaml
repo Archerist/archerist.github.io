@@ -1,26 +1,14 @@
-name: Build and Publish
+name: Build Vue
 on: [push, workflow_dispatch]
 jobs:
-  Build_and_Publish:
+  build_vue:
     runs-on: ubuntu-latest
+    name: Build Vue
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - name: List files in the repository
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-      - run: |
-          npm i
-          npm run build
-      - name: Push directory to another repository
-        uses: cpina/github-action-push-to-another-repository@v1.4.2
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source-directory: 'dist'
-          destination-github-username: 'archerist'
-          destination-repository-name: 'archerist.github.io'
-          user-email: yunuscemberci@gmail.com
-          target-branch: main
-
+    - uses: actions/checkout@v2
+    - id: Build-Vue
+      uses: xRealNeon/VuePagesAction@1.0.1
+      with:
+        username: 'Archerist'
+        reponame: 'archerist.github.io'
+        token: ${{ secrets.API_TOKEN_GITHUB }}
