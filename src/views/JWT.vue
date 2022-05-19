@@ -4,24 +4,32 @@
 
     <el-row :gutter="10" justify="end">
         <el-col :span="12">
-            <label>Token</label>
-            <el-input v-model="result" type="textarea" :rows="20" />
+            <label>jwt</label>
+            <el-input v-model="inputs.result" type="textarea" :rows="20" />
         </el-col>
         <el-col :span="12">
-            <label>Header <a v-if="error.header"> ERROR </a></label>
-            <el-input v-model="headerJSON" :rows="5" type="textarea" @change="calculateJWT" />
-            <label>Payload <a v-if="error.payload"> ERROR </a></label>
-            <el-input v-model="payloadJSON" :rows="5" type="textarea" @change="calculateJWT"/>
-            <label>Secret <a v-if="error.secret"> ERROR </a></label>
-            <el-input v-model="secret" :rows="5" type="textarea" @change="calculateJWT"/>
+            <label>Header</label>
+            <el-input v-model="inputs.headerJSON" placeholder="JSON" :rows="5" type="textarea" @change="updateHeader" />
+            <label>Payload </label>
+            <el-input v-model="inputs.payloadJSON" placeholder="JSON" :rows="5" type="textarea" @change="null"/>
+            <label>Secret </label>
+            <el-input v-model="inputs.secret" :rows="5" type="textarea" @change="null"/>
+        </el-col>
+    </el-row>
+
+    <el-row>
+        <el-col :span="24">
+            <a v-if="error.header" ref="headerError"> ERROR </a>
+            <a v-if="error.payload"> ERROR </a>
+            <a v-if="error.secret"> ERROR </a>
         </el-col>
     </el-row>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import crypto from 'crypto-js'
-import { JWTPage } from "../types/types";
+import { JWTPage } from "@/core/types/JWT";
+//import { calculateJWT } from "@/core/JWT";
 
 export default defineComponent({
 
@@ -30,30 +38,23 @@ export default defineComponent({
 
         let data: JWTPage = {
 
-            token: {
+            jwt: {
                 header: {
                     typ: "JWT",
-                    alg: null
+                    alg: "None"
                 },
 
-                payload: null,
-
-                secret: null
+                payload: null
             },
 
-            algs: {
-                'hs256': crypto.HmacSHA256,
-                'hs384': crypto.HmacSHA384,
-                'hs512': crypto.HmacSHA512,
-                // eslint-disable-next-line
-                'none': function(x:any){return ''}
+            inputs: {
+
+                headerJSON: '',
+                payloadJSON: '',
+                secret: '',
+
+                token: '',
             },
-
-            headerJSON: '',
-            payloadJSON: '',
-            secret: '',
-
-            result: '',
 
             error: {
                 header: false,
@@ -67,39 +68,26 @@ export default defineComponent({
         return data
     },
     methods: {
-        calculateJWT: function () {
+        updateHeader: function () {
             try {
                 this.error.header = false
-                this.token.header = JSON.parse(this.headerJSON)
+                let _h = JSON.parse(this.inputs.headerJSON)
+                if (_h.typ === undefined || _h.alg === undefined) throw new Error('"alg" and "type" keys missing')
             } catch (error) {
-                if (this.headerJSON !== '') this.error.header = true
+                this.error.header = true
+                let errElement = this.$refs.headerError as HTMLAnchorElement
+                console.log(errElement)
+                errElement.textContent = error as string
             }
-
-            let headerArray = crypto.enc.Utf8.parse(JSON.stringify(this.token.header))
-            let base64header = crypto.enc.Base64url.stringify(headerArray)
+        },
+        updatePayload: function () {
 
             try {
-                this.error.payload = false
-                this.token.payload = JSON.parse(this.payloadJSON)
+                this.error.header = false
+                this.jwt.header = JSON.parse(this.inputs.headerJSON)
             } catch (error) {
-                if (this.payloadJSON !== '') this.error.payload = true
-
+                this.error.header = true
             }
-
-            //if(this.payload === '' || this.header === '') return
-
-
-            let payloadArray = crypto.enc.Utf8.parse(JSON.stringify(this.token.payload))
-            let base64payload = crypto.enc.Base64url.stringify(payloadArray)
-            
-            let resultPart1 = base64header + '.' + base64payload
-
-            let wArray = crypto.enc.Utf8.parse(resultPart1)
-            let signature = this.algs[this.token.header.alg?.toLowerCase() ?? 'none'](wArray, this.secret).toString()
-
-            this.result = resultPart1 + '.' + signature
-
-
         }
     }
 

@@ -42,7 +42,9 @@
       "ecmaVersion": 2020
     },
     "rules": {
-      "indent": "off"
+      "indent": "off",
+      "prefer-const":"off",
+      "no-explicit-any":"off"
     }
   },
   "browserslist": [
@@ -50,9 +52,6 @@
     "last 2 versions",
     "not dead"
   ],
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
   "lint-staged": {
     "*.{js,jsx,vue,ts,tsx}": [
       "vue-cli-service lint",
