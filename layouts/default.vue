@@ -21,6 +21,12 @@ const mainNav: Ref<any[]> = ref([{
   icon: 'i-heroicons-wrench-screwdriver',
   to: '/tools'
 
+},
+{
+  label: 'Games',
+  icon: 'i-heroicons-rocket-launch',
+  to: '/games'
+
 }])
 
 
