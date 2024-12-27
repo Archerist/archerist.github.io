@@ -6,12 +6,15 @@
 
       <template v-slot="{ doc }">
         
-        <UCard>
+        <UCard >
           <template #header> 
-            <ULink inactive-class="text-primary" to="/blog"><UIcon name="i-heroicons-arrow-long-left"></UIcon></ULink>
-            {{ doc.title }}
-          </template>
-          <ContentRenderer :value="doc" />
+            <div class="flex flex-row items-center justify-between">
+              <UButton  to="/blog" icon="i-heroicons-arrow-long-left">Back</UButton>
+              <p class="text-4xl">{{ doc.title }}</p>
+              <div></div>
+            </div>
+            </template>
+          <ContentRenderer class="prose dark:prose-invert lg:prose-xl" :value="doc" />
 
         </UCard>
       </template>
