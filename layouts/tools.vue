@@ -14,7 +14,9 @@
 const nav: Ref<any[]> = ref([{
   label: 'JWT',
   to: '/tools'
-}])
+}, {
+  label: 'GDD Randomizer',
+  to: '/tools/gdd'}])
 
 </script>
 
